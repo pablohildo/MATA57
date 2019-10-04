@@ -12,7 +12,7 @@ typedef struct
 int main(int argc, char const *argv[])
 {
     int n;
-    queue<Pessoa> manR, womanR, manW, womanW;
+    queue<Pessoa> manR, womanR, manW, womanW, manAux, womanAux;
     Pessoa aux;
     cin >> n;
     for (int i = 0; i < n; i++)
@@ -26,34 +26,40 @@ int main(int argc, char const *argv[])
         manW.push(aux);
     }
 
-    for (int i = 0; i < womanW.size(); i++)
+    for (int i = 0; i < n; i++)
     {
         if (womanW.front().genero == 'M')
         {
             womanR.push(womanW.front());
             womanW.pop();
-        }    
+        } else {
+            manAux.push(womanW.front());
+            womanW.pop();
+        }
     }
 
-    for (int i = 0; i < manW.size(); i++)
+    for (int i = 0; i < n; i++)
     {
         if (manW.front().genero == 'H')
         {
             manR.push(manW.front());
             manW.pop();
-        }    
+        } else {
+            womanAux.push(manW.front());
+            manW.pop();
+        }
     }
 
-    while (!womanW.empty())
+    while (!manAux.empty())
     {
-        manR.push(womanW.front());
-        womanW.pop();
+        manR.push(manAux.front());
+        manAux.pop();
     }
 
-    while (!manW.empty())
+    while (!womanAux.empty())
     {
-        womanR.push(manW.front());
-        manW.pop();
+        womanR.push(womanAux.front());
+        womanAux.pop();
     }
     
     cout << "Fila Feminina:" << endl;
